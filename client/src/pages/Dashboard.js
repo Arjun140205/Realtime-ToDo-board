@@ -42,12 +42,6 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-main">
-      <header className="dashboard-header">
-        <h1 className="board-title">Work Tasks</h1>
-        <div className="dashboard-header-actions">
-          <button onClick={logout} className="logout-btn">Logout</button>
-        </div>
-      </header>
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', flexWrap: 'wrap' }}>
         <TaskBoard tasks={tasks} setTasks={setTasks} />
         <ActivityLog />
