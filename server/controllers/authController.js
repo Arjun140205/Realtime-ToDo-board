@@ -36,6 +36,7 @@ const loginUser = async (req, res, next) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
+    
     if (user && await user.matchPassword(password)) {
       res.json({
         _id: user._id,
