@@ -61,51 +61,11 @@ const TaskBoard = ({ tasks, setTasks }) => {
 
   return (
     <div>
-      {/* Board Title and Add Task Link */}
+      {/* Board Title and New List Button */}
       <div className="board-header">
         <h2 className="board-title">Work Tasks</h2>
-        <button
-          className="add-task-link"
-          onClick={() => setShowForm((v) => !v)}
-          type="button"
-        >
-          + Add Task
-        </button>
-        {showForm && (
-          <div className="add-task-modal" onClick={() => setShowForm(false)}>
-            <form
-              onSubmit={(e) => {
-                handleCreate(e);
-                setShowForm(false);
-              }}
-              className="task-form-modal"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <input
-                placeholder="Title"
-                value={newTask.title}
-                onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-                required
-              />
-              <input
-                placeholder="Description"
-                value={newTask.description}
-                onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
-              />
-              <select
-                value={newTask.priority}
-                onChange={(e) => setNewTask({ ...newTask, priority: e.target.value })}
-              >
-                <option>Low</option>
-                <option>Medium</option>
-                <option>High</option>
-              </select>
-              <button type="submit">Add</button>
-            </form>
-          </div>
-        )}
+        <button className="add-list-btn" type="button">+ new List</button>
       </div>
-
       {/* Kanban board */}
       <div className="kanban-board-wrapper">
         <div className="kanban-board">
@@ -129,14 +89,12 @@ const TaskBoard = ({ tasks, setTasks }) => {
           ))}
         </div>
       </div>
-
       {/* Conflict Resolution Modal */}
       {conflictData && (
         <div className="conflict-modal-overlay">
           <div className="conflict-modal">
             <h3>⚠️ Conflict Detected</h3>
             <p>Two users tried editing this task. Choose which version to keep:</p>
-
             <div className="conflict-versions">
               <div className="conflict-version">
                 <h4>Your Version</h4>
@@ -149,7 +107,6 @@ const TaskBoard = ({ tasks, setTasks }) => {
                 <button onClick={() => handleConflictResolve('keepServer')}>Keep Server</button>
               </div>
             </div>
-
             <button onClick={() => setConflictData(null)} style={{ marginTop: '10px' }}>
               Cancel
             </button>
