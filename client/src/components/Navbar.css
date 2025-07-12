@@ -8,41 +8,65 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 28px;
-  min-height: 54px;
-  background: #181a1b;
-  border-bottom: 1.5px solid #23263a;
+  padding: 0 32px;
+  min-height: 64px;
+  background: #23243a;
+  border-bottom: 1.5px solid #2d2e4a;
   box-shadow: none;
   font-family: 'Inter', Arial, sans-serif;
   transition: background 0.14s, min-height 0.14s, padding 0.14s;
 }
-
-.navbar-logo {
-  font-size: 1.12rem;
-  font-weight: 700;
-  color: #2563eb;
-  letter-spacing: 2px;
-  user-select: none;
-  text-shadow: none;
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
-
+.navbar-hamburger {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-right: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.14s;
+}
+.navbar-hamburger:hover, .navbar-hamburger:focus {
+  background: #2d2e4a;
+}
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.navbar-logo-text {
+  font-size: 1.38rem;
+  font-weight: 800;
+  color: #f3f6fa;
+  letter-spacing: 1.2px;
+  margin-left: 2px;
+  font-family: 'Inter', Arial, sans-serif;
+}
 .navbar-links {
   display: flex;
   gap: 22px;
 }
-
 .nav-link {
   position: relative;
-  font-size: 1.01rem;
-  color: #f3f6fa;
+  font-size: 1.08rem;
+  color: #b0b8d1;
   text-decoration: none;
   font-weight: 600;
   letter-spacing: 1px;
   padding: 4px 0;
   transition: color 0.14s;
+  border-radius: 6px;
 }
 .nav-link:hover, .nav-link:focus {
-  color: #2563eb;
+  color: #a78bfa;
+  background: #2d2e4a;
 }
 .nav-link::after {
   content: '';
@@ -61,31 +85,31 @@
 
 @media (max-width: 900px) {
   .navbar {
-    min-height: 44px;
+    min-height: 54px;
     padding: 0 10px;
   }
-  .navbar-logo {
-    font-size: 0.98rem;
+  .navbar-logo-text {
+    font-size: 1.08rem;
   }
   .navbar-links {
     gap: 10px;
   }
   .nav-link {
-    font-size: 0.95rem;
+    font-size: 0.98rem;
   }
 }
 @media (max-width: 600px) {
   .navbar {
     flex-direction: column;
     align-items: flex-start;
-    min-height: 36px;
+    min-height: 44px;
     padding: 0 4px;
     gap: 2px;
   }
   .navbar-links {
     gap: 6px;
   }
-  .navbar-logo {
+  .navbar-logo-text {
     font-size: 0.88rem;
   }
 } 
