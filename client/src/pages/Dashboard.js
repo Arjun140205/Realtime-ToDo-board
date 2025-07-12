@@ -3,6 +3,7 @@ import { AuthContext } from '../context/AuthContext';
 import TaskBoard from '../components/TaskBoard';
 import API from '../utils/api';
 import socket from '../utils/socket';
+import ActivityLog from '../components/ActivityLog';
 
 const Dashboard = () => {
   const { user, logout } = useContext(AuthContext);
@@ -44,8 +45,10 @@ const Dashboard = () => {
         <h1>Welcome, {user.name}</h1>
         <button onClick={logout}>Logout</button>
       </header>
-
-      <TaskBoard tasks={tasks} setTasks={setTasks} />
+      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', flexWrap: 'wrap' }}>
+        <TaskBoard tasks={tasks} setTasks={setTasks} />
+        <ActivityLog />
+      </div>
     </div>
   );
 };
