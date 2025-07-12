@@ -25,10 +25,20 @@ body, #root {
   transition: background 0.2s;
 }
 
+.kanban-board-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 1200px;
+}
+
 .kanban-board {
   display: flex;
   gap: 28px;
-  margin: 36px auto 0 auto;
+  margin: 0 auto;
   justify-content: center;
   align-items: flex-start;
   min-height: 65vh;
@@ -38,6 +48,10 @@ body, #root {
   background: var(--dark-bg2);
   box-shadow: var(--shadow);
   transition: background var(--transition), box-shadow var(--transition);
+  position: relative;
+}
+.kanban-board:hover, .kanban-board:focus-within {
+  box-shadow: 0 6px 32px 0 #2563eb33, 0 2px 8px 0 #000a;
 }
 
 .kanban-column {
@@ -45,6 +59,7 @@ body, #root {
   padding: 18px 10px 18px 10px;
   border-radius: 12px;
   min-width: 260px;
+  max-width: 1fr;
   min-height: 340px;
   background: var(--column-bg);
   box-shadow: var(--shadow);
@@ -55,6 +70,18 @@ body, #root {
   transition: box-shadow var(--transition), border var(--transition), background var(--transition);
   overflow: hidden;
   align-items: stretch;
+}
+.kanban-column:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 18px;
+  right: -14px;
+  width: 2px;
+  height: calc(100% - 36px);
+  background: linear-gradient(180deg, #23263a 60%, #2563eb22 100%);
+  opacity: 0.7;
+  border-radius: 2px;
+  pointer-events: none;
 }
 .kanban-column:hover, .kanban-column:focus-within {
   border: 1.5px solid var(--border-hover);
@@ -240,17 +267,153 @@ button:focus, .task-card button:focus {
   flex: 1;
 }
 
+.board-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 38px auto 0 auto;
+  padding: 0 0 8px 0;
+  position: relative;
+}
+
+.board-title {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: 1.5px;
+  margin: 0;
+  text-align: left;
+  line-height: 1.1;
+  user-select: none;
+}
+
+.add-task-link {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--accent);
+  background: none;
+  border: none;
+  padding: 7px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+  box-shadow: none;
+  outline: none;
+  margin-left: 18px;
+  margin-bottom: 2px;
+  position: relative;
+  z-index: 10;
+}
+.add-task-link:hover, .add-task-link:focus {
+  background: #23272f;
+  color: var(--accent-hover);
+  box-shadow: 0 2px 8px 0 var(--accent-hover);
+}
+
+.add-task-modal {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  z-index: 100;
+  background: none;
+}
+
+.task-form-modal {
+  background: var(--card-bg);
+  border-radius: 10px;
+  box-shadow: 0 4px 24px 0 #000c, 0 2px 8px 0 var(--accent-hover);
+  padding: 18px 18px 12px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 260px;
+  border: 1.5px solid var(--border);
+  position: relative;
+  animation: fadeIn 0.22s cubic-bezier(.39,.58,.57,1.01);
+}
+.task-form-modal input,
+.task-form-modal select {
+  padding: 7px 10px;
+  border-radius: 5px;
+  border: 1.5px solid var(--border);
+  font-size: 1rem;
+  background: #181a1b;
+  color: var(--text-main);
+  font-family: inherit;
+  transition: border var(--transition), box-shadow var(--transition);
+  box-shadow: none;
+}
+.task-form-modal input:focus,
+.task-form-modal select:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 8px 1px var(--accent-hover);
+}
+.task-form-modal button {
+  padding: 7px 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-hover) 100%);
+  color: var(--text-main);
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  box-shadow: 0 2px 8px 0 var(--accent-hover);
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
+  margin-top: 6px;
+}
+.task-form-modal button:hover, .task-form-modal button:focus {
+  background: linear-gradient(90deg, var(--accent-hover) 0%, var(--accent) 100%);
+  box-shadow: 0 4px 18px 0 var(--accent-hover);
+  transform: translateY(-1px) scale(1.03);
+}
+
+.column-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  min-height: 38px;
+}
+
 @media (max-width: 900px) {
+  .kanban-board-wrapper {
+    max-width: 98vw;
+  }
   .kanban-board {
     gap: 10px;
     padding: 10px 0;
+    max-width: 98vw;
   }
   .kanban-column {
     min-width: 180px;
     padding: 6px;
   }
+  .board-header {
+    max-width: 98vw;
+    margin: 18px auto 0 auto;
+    padding: 0 0 4px 0;
+  }
+  .board-title {
+    font-size: 1.3rem;
+  }
+  .add-task-link {
+    font-size: 0.98rem;
+    padding: 6px 10px;
+  }
+  .task-form-modal {
+    min-width: 160px;
+    padding: 10px 6px 8px 6px;
+  }
 }
 @media (max-width: 700px) {
+  .kanban-board-wrapper {
+    max-width: 100vw;
+    padding: 0;
+  }
   .kanban-board {
     flex-direction: column;
     flex-wrap: nowrap;
@@ -259,12 +422,29 @@ button:focus, .task-card button:focus {
     align-items: stretch;
     padding-bottom: 0;
     background: var(--dark-bg2);
+    max-width: 100vw;
   }
   .kanban-column {
     min-width: 0;
     max-width: 100vw;
     width: 100%;
     flex: 1 1 0;
+  }
+  .kanban-column:not(:last-child)::after {
+    display: none;
+  }
+}
+@media (max-width: 600px) {
+  .board-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    margin: 8px auto 0 auto;
+    padding: 0 0 2px 0;
+  }
+  .add-task-link {
+    margin-left: 0;
+    align-self: flex-end;
   }
 }
 @media (max-width: 500px) {
