@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import TaskCard from './TaskCard';
 import API from '../utils/api';
+import './TaskBoard.css';
 
 const TaskBoard = ({ tasks, setTasks }) => {
   const columns = ['Todo', 'In Progress', 'Done'];
@@ -60,7 +61,7 @@ const TaskBoard = ({ tasks, setTasks }) => {
   return (
     <div>
       {/* Task creation form */}
-      <form onSubmit={handleCreate}>
+      <form onSubmit={handleCreate} className="task-form">
         <input
           placeholder="Title"
           value={newTask.title}
@@ -84,23 +85,18 @@ const TaskBoard = ({ tasks, setTasks }) => {
       </form>
 
       {/* Kanban board */}
-      <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
+      <div className="kanban-board">
         {columns.map((status) => (
           <div
             key={status}
-            style={{
-              flex: 1,
-              padding: '10px',
-              border: '2px solid #ccc',
-              minHeight: '200px',
-            }}
+            className="kanban-column"
             onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => {
               const taskId = e.dataTransfer.getData('taskId');
               handleDrop(taskId, status);
             }}
           >
-            <h3>{status}</h3>
+            <h3 className="column-title">{status}</h3>
             {tasks.filter(t => t.status === status).map(task => (
               <TaskCard key={task._id} task={task} />
             ))}
@@ -110,25 +106,18 @@ const TaskBoard = ({ tasks, setTasks }) => {
 
       {/* Conflict Resolution Modal */}
       {conflictData && (
-        <div style={{
-          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-          backgroundColor: 'rgba(0,0,0,0.7)', display: 'flex',
-          alignItems: 'center', justifyContent: 'center'
-        }}>
-          <div style={{
-            background: '#fff', padding: '20px', borderRadius: '8px',
-            width: '90%', maxWidth: '600px'
-          }}>
+        <div className="conflict-modal-overlay">
+          <div className="conflict-modal">
             <h3>⚠️ Conflict Detected</h3>
             <p>Two users tried editing this task. Choose which version to keep:</p>
 
-            <div style={{ display: 'flex', gap: '20px' }}>
-              <div style={{ flex: 1 }}>
+            <div className="conflict-versions">
+              <div className="conflict-version">
                 <h4>Your Version</h4>
                 <pre>{JSON.stringify(conflictData.clientVersion, null, 2)}</pre>
                 <button onClick={() => handleConflictResolve('overwrite')}>Overwrite</button>
               </div>
-              <div style={{ flex: 1 }}>
+              <div className="conflict-version">
                 <h4>Server Version</h4>
                 <pre>{JSON.stringify(conflictData.serverVersion, null, 2)}</pre>
                 <button onClick={() => handleConflictResolve('keepServer')}>Keep Server</button>
