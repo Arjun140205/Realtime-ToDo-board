@@ -7,6 +7,7 @@ const TaskBoard = ({ tasks, setTasks }) => {
   const columns = ['Todo', 'In Progress', 'Done'];
   const [newTask, setNewTask] = useState({ title: '', description: '', priority: 'Medium' });
   const [conflictData, setConflictData] = useState(null);
+  const [showForm, setShowForm] = useState(false);
 
   const handleDrop = async (taskId, newStatus) => {
     try {
@@ -60,48 +61,73 @@ const TaskBoard = ({ tasks, setTasks }) => {
 
   return (
     <div>
-      {/* Task creation form */}
-      <form onSubmit={handleCreate} className="task-form">
-        <input
-          placeholder="Title"
-          value={newTask.title}
-          onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-          required
-        />
-        <input
-          placeholder="Description"
-          value={newTask.description}
-          onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
-        />
-        <select
-          value={newTask.priority}
-          onChange={(e) => setNewTask({ ...newTask, priority: e.target.value })}
+      {/* Board Title and Add Task Link */}
+      <div className="board-header">
+        <h2 className="board-title">Work Tasks</h2>
+        <button
+          className="add-task-link"
+          onClick={() => setShowForm((v) => !v)}
+          type="button"
         >
-          <option>Low</option>
-          <option>Medium</option>
-          <option>High</option>
-        </select>
-        <button type="submit">Add Task</button>
-      </form>
+          + Add Task
+        </button>
+        {showForm && (
+          <div className="add-task-modal" onClick={() => setShowForm(false)}>
+            <form
+              onSubmit={(e) => {
+                handleCreate(e);
+                setShowForm(false);
+              }}
+              className="task-form-modal"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <input
+                placeholder="Title"
+                value={newTask.title}
+                onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
+                required
+              />
+              <input
+                placeholder="Description"
+                value={newTask.description}
+                onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
+              />
+              <select
+                value={newTask.priority}
+                onChange={(e) => setNewTask({ ...newTask, priority: e.target.value })}
+              >
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+              </select>
+              <button type="submit">Add</button>
+            </form>
+          </div>
+        )}
+      </div>
 
       {/* Kanban board */}
-      <div className="kanban-board">
-        {columns.map((status) => (
-          <div
-            key={status}
-            className="kanban-column"
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={(e) => {
-              const taskId = e.dataTransfer.getData('taskId');
-              handleDrop(taskId, status);
-            }}
-          >
-            <h3 className="column-title">{status}</h3>
-            {tasks.filter(t => t.status === status).map(task => (
-              <TaskCard key={task._id} task={task} />
-            ))}
-          </div>
-        ))}
+      <div className="kanban-board-wrapper">
+        <div className="kanban-board">
+          {columns.map((status) => (
+            <div
+              key={status}
+              className="kanban-column"
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={(e) => {
+                const taskId = e.dataTransfer.getData('taskId');
+                handleDrop(taskId, status);
+              }}
+            >
+              <div className="column-header">
+                <h3 className="column-title">{status}</h3>
+              </div>
+              {tasks.filter(t => t.status === status).map(task => (
+                <TaskCard key={task._id} task={task} />
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Conflict Resolution Modal */}
