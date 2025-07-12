@@ -33,7 +33,6 @@ const TaskCard = ({ task }) => {
       className="task-card fade-in"
     >
       <div className="task-card-row">
-        <input type="checkbox" className="task-checkbox" />
         <h4 className="task-title">{task.title}</h4>
       </div>
       <div className="task-desc">{task.description}</div>
