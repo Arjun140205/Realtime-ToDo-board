@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import About from './pages/About';
 import Footer from './components/Footer';
 import Sidebar from './components/Sidebar';
+import ActivityLog from './components/ActivityLog';
 
 const App = () => {
   const location = window.location.pathname;
@@ -26,6 +27,11 @@ const App = () => {
             </ProtectedRoute>
           } />
           <Route path="/about" element={<About />} />
+          <Route path="/logs" element={
+            <ProtectedRoute>
+              <ActivityLog />
+            </ProtectedRoute>
+          } />
         </Routes>
         {!hideNavFooter && <Footer />}
       </div>
