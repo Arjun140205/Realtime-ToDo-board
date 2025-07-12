@@ -46,12 +46,12 @@ body, #root {
   max-width: 1200px;
   border-radius: 18px;
   background: var(--dark-bg2);
-  box-shadow: var(--shadow);
+  box-shadow: none;
   transition: background var(--transition), box-shadow var(--transition);
   position: relative;
 }
 .kanban-board:hover, .kanban-board:focus-within {
-  box-shadow: 0 6px 32px 0 #2563eb33, 0 2px 8px 0 #000a;
+  box-shadow: none;
 }
 
 .kanban-column {
@@ -62,7 +62,7 @@ body, #root {
   max-width: 1fr;
   min-height: 340px;
   background: var(--column-bg);
-  box-shadow: var(--shadow);
+  box-shadow: none;
   display: flex;
   flex-direction: column;
   border: 1.5px solid var(--border);
@@ -84,8 +84,8 @@ body, #root {
   pointer-events: none;
 }
 .kanban-column:hover, .kanban-column:focus-within {
+  box-shadow: none;
   border: 1.5px solid var(--border-hover);
-  box-shadow: var(--shadow-hover);
   background: #23272f;
   z-index: 2;
 }
@@ -108,7 +108,7 @@ body, #root {
   padding: 14px 10px 10px 10px;
   background: var(--card-bg);
   border-radius: 8px;
-  box-shadow: var(--shadow);
+  box-shadow: none;
   cursor: grab;
   position: relative;
   transition: box-shadow var(--transition), transform var(--transition), border var(--transition), background var(--transition);
@@ -119,7 +119,7 @@ body, #root {
   align-items: stretch;
 }
 .task-card:hover, .task-card:focus-within {
-  box-shadow: var(--shadow-hover);
+  box-shadow: none;
   border-color: var(--border-hover);
   background: #23272f;
   transform: scale(1.018);
@@ -269,14 +269,13 @@ button:focus, .task-card button:focus {
 
 .board-header {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   max-width: 1200px;
   margin: 38px auto 0 auto;
   padding: 0 0 8px 0;
   position: relative;
 }
-
 .board-title {
   font-size: 2.1rem;
   font-weight: 800;
@@ -287,17 +286,16 @@ button:focus, .task-card button:focus {
   line-height: 1.1;
   user-select: none;
 }
-
-.add-task-link {
+.add-list-btn {
   font-size: 1.08rem;
   font-weight: 700;
-  color: var(--accent);
+  color: #a78bfa;
   background: none;
-  border: none;
-  padding: 7px 18px;
+  border: 1.5px solid #a78bfa;
+  padding: 7px 22px;
   border-radius: 999px;
   cursor: pointer;
-  transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+  transition: background 0.14s, color 0.14s, border 0.14s;
   box-shadow: none;
   outline: none;
   margin-left: 18px;
@@ -305,19 +303,10 @@ button:focus, .task-card button:focus {
   position: relative;
   z-index: 10;
 }
-.add-task-link:hover, .add-task-link:focus {
-  background: #23272f;
-  color: var(--accent-hover);
-  box-shadow: 0 2px 8px 0 var(--accent-hover);
-}
-
-.add-task-modal {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: 8px;
-  z-index: 100;
-  background: none;
+.add-list-btn:hover, .add-list-btn:focus {
+  background: #a78bfa22;
+  color: #fff;
+  border-color: #fff;
 }
 
 .task-form-modal {
@@ -400,7 +389,7 @@ button:focus, .task-card button:focus {
   .board-title {
     font-size: 1.3rem;
   }
-  .add-task-link {
+  .add-list-btn {
     font-size: 0.98rem;
     padding: 6px 10px;
   }
@@ -442,7 +431,7 @@ button:focus, .task-card button:focus {
     margin: 8px auto 0 auto;
     padding: 0 0 2px 0;
   }
-  .add-task-link {
+  .add-list-btn {
     margin-left: 0;
     align-self: flex-end;
   }
