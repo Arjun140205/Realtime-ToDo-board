@@ -4,6 +4,7 @@ import TaskBoard from '../components/TaskBoard';
 import API from '../utils/api';
 import socket from '../utils/socket';
 import ActivityLog from '../components/ActivityLog';
+import './Dashboard.css';
 
 const Dashboard = () => {
   const { user, logout } = useContext(AuthContext);
@@ -40,10 +41,12 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div>
-      <header>
-        <h1>Welcome, {user.name}</h1>
-        <button onClick={logout}>Logout</button>
+    <div className="dashboard-main">
+      <header className="dashboard-header">
+        <h1 className="board-title">Work Tasks</h1>
+        <div className="dashboard-header-actions">
+          <button onClick={logout} className="logout-btn">Logout</button>
+        </div>
       </header>
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', flexWrap: 'wrap' }}>
         <TaskBoard tasks={tasks} setTasks={setTasks} />
