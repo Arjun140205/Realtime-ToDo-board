@@ -18,14 +18,7 @@ const TaskCard = ({ task }) => {
     <div
       draggable
       onDragStart={handleDragStart}
-      style={{
-        border: '1px solid black',
-        margin: '5px 0',
-        padding: '10px',
-        backgroundColor: '#f9f9f9',
-        cursor: 'grab',
-        position: 'relative',
-      }}
+      className="task-card fade-in"
     >
       <h4>{task.title}</h4>
       <p>{task.description}</p>
