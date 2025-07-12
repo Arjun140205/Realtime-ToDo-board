@@ -3,34 +3,184 @@
   top: 0;
   left: 0;
   height: 100vh;
-  width: 60px;
-  background: #181a1b;
+  width: 220px;
+  background: #23243a;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 16px 0;
-  gap: 18px;
-  border-right: 1.5px solid #23263a;
+  align-items: stretch;
+  padding: 0 0 0 0;
+  gap: 0;
+  border-right: 1.5px solid #2d2e4a;
   z-index: 200;
+  box-shadow: none;
+  transition: background 0.18s, width 0.18s;
 }
-.sidebar-icon {
-  width: 40px;
-  height: 40px;
+.sidebar-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 22px 22px 18px 22px;
+  min-height: 64px;
+}
+.sidebar-hamburger {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-right: 6px;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #b0b8d1;
   border-radius: 8px;
-  margin-bottom: 2px;
-  transition: background 0.14s, color 0.14s;
+  transition: background 0.14s;
+}
+.sidebar-hamburger:hover, .sidebar-hamburger:focus {
+  background: #2d2e4a;
+}
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sidebar-logo-text {
+  font-size: 1.38rem;
+  font-weight: 800;
+  color: #f3f6fa;
+  letter-spacing: 1.2px;
+  margin-left: 2px;
+  font-family: 'Inter', Arial, sans-serif;
+}
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 8px;
+  margin-bottom: 10px;
+}
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 22px 10px 22px;
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: #b0b8d1;
   text-decoration: none;
+  border-radius: 8px;
+  margin: 0 8px;
+  transition: background 0.14s, color 0.14s;
+  position: relative;
 }
-.sidebar-icon.active, .sidebar-icon:hover, .sidebar-icon:focus {
-  background: #23272f;
-  color: #2563eb;
+.sidebar-link.active, .sidebar-link:hover, .sidebar-link:focus {
+  background: #2d2e4a;
+  color: #a78bfa;
+  box-shadow: none;
 }
-.sidebar-icon svg {
-  display: block;
+.sidebar-link-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  color: inherit;
+}
+.sidebar-link-text {
+  flex: 1;
+  text-align: left;
+  color: inherit;
+  font-size: 1.08rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.sidebar-create-board {
+  margin: 18px 18px 0 18px;
+  padding: 10px 0;
+  border-radius: 8px;
+  background: none;
+  border: 1.5px solid #a78bfa;
+  color: #a78bfa;
+  font-size: 1.08rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.14s, color 0.14s, border 0.14s;
+  width: calc(100% - 36px);
+  text-align: center;
+  box-shadow: none;
+}
+.sidebar-create-board:hover, .sidebar-create-board:focus {
+  background: #a78bfa22;
+  color: #fff;
+  border-color: #fff;
+  box-shadow: none;
+}
+.sidebar-theme-toggle {
+  margin-top: auto;
+  margin-bottom: 18px;
+  margin-left: 18px;
+  background: #2d2e4a;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  transition: background 0.14s;
+  outline: none;
+  box-shadow: none;
+}
+.sidebar-theme-toggle:hover, .sidebar-theme-toggle:focus {
+  background: #a78bfa;
+}
+.theme-icon {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.theme-icon .sun {
+  opacity: 1;
+  transition: opacity 0.18s;
+}
+.theme-icon .moon {
+  position: absolute;
+  left: 0; top: 0;
+  opacity: 0;
+  transition: opacity 0.18s;
+}
+body.light .theme-icon .sun {
+  opacity: 0;
+}
+body.light .theme-icon .moon {
+  opacity: 1;
+}
+body.light .sidebar {
+  background: #f7f8fa;
+  border-right: 1.5px solid #e5e7eb;
+}
+body.light .sidebar-link {
+  color: #6b7280;
+}
+body.light .sidebar-link.active, body.light .sidebar-link:hover, body.light .sidebar-link:focus {
+  background: #e5e7eb;
+  color: #a78bfa;
+}
+body.light .sidebar-create-board {
+  border-color: #a78bfa;
+  color: #a78bfa;
+  background: none;
+}
+body.light .sidebar-create-board:hover, body.light .sidebar-create-board:focus {
+  background: #a78bfa22;
+  color: #fff;
+  border-color: #fff;
+}
+body.light .sidebar-theme-toggle {
+  background: #e5e7eb;
 }
 @media (max-width: 700px) {
   .sidebar {
