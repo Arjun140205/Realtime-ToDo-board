@@ -43,7 +43,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard-main">
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', flexWrap: 'wrap' }}>
-        <TaskBoard tasks={tasks} setTasks={setTasks} />
+      <TaskBoard tasks={tasks} setTasks={setTasks} />
         <ActivityLog />
       </div>
     </div>
