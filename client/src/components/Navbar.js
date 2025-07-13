@@ -1,14 +1,14 @@
 import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
-const Navbar = () => {
+const Navbar = ({ onHamburgerClick }) => {
   const location = useLocation();
   // Hide on login/register
   if (["/", "/login", "/register"].includes(location.pathname)) return null;
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <button className="navbar-hamburger" aria-label="Menu">
+        <button className="navbar-hamburger" aria-label="Menu" onClick={onHamburgerClick}>
           <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="7" x2="23" y2="7"/><line x1="5" y1="14" x2="23" y2="14"/><line x1="5" y1="21" x2="23" y2="21"/></svg>
         </button>
         <span className="navbar-logo">
