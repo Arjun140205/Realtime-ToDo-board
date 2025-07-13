@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
@@ -19,33 +19,23 @@ const App = () => {
   const { user } = useContext(AuthContext);
   const showLayout = user && !hideNavFooter;
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [boards, setBoards] = useState([]); // [{ name: string }]
+  const navigate = useNavigate();
 
   const handleHamburgerClick = () => setSidebarOpen((open) => !open);
   const handleSidebarClose = () => setSidebarOpen(false);
 
+  const handleCreateBoard = (name) => {
+    setBoards(prev => [...prev, { name }]);
+    setSidebarOpen(false);
+    navigate(`/board/${encodeURIComponent(name)}`);
+  };
+
   return (
     <div style={{ minHeight: '100vh', background: '#191a23' }}>
       {showLayout && <Navbar onHamburgerClick={handleHamburgerClick} />}
-      {showLayout && sidebarOpen && (
-        <div className="sidebar-overlay" onClick={handleSidebarClose} />
-      )}
       {showLayout && (
-        <Sidebar 
-          style={{
-            position: 'fixed',
-            top: NAVBAR_HEIGHT,
-            left: sidebarOpen ? 0 : '-220px',
-            height: `calc(100vh - ${NAVBAR_HEIGHT}px)` ,
-            width: 220,
-            zIndex: 200,
-            transition: 'left 0.22s cubic-bezier(.4,0,.2,1)',
-            boxShadow: sidebarOpen ? '0 0 0 9999px rgba(0,0,0,0.2)' : 'none',
-            background: '#23243a',
-            borderRight: '1.5px solid #2d2e4a',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        />
+        <Sidebar open={sidebarOpen} onClose={handleSidebarClose} onCreateBoard={handleCreateBoard} />
       )}
       <div style={{
         marginTop: showLayout ? NAVBAR_HEIGHT : 0,
@@ -65,6 +55,12 @@ const App = () => {
           <Route path="/logs" element={
             <ProtectedRoute>
               <ActivityLog />
+            </ProtectedRoute>
+          } />
+          {/* Render a new dashboard for each board */}
+          <Route path="/board/:name" element={
+            <ProtectedRoute>
+              <Dashboard />
             </ProtectedRoute>
           } />
         </Routes>
