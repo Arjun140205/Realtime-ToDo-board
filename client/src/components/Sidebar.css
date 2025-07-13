@@ -1,7 +1,7 @@
 .sidebar {
-  position: fixed;
-  top: 64px; /* height of navbar */
-  left: 0;
+  position: absolute;
+  top: 64px;
+  left: -220px;
   height: calc(100vh - 64px);
   width: 220px;
   background: #23243a;
@@ -13,8 +13,57 @@
   border-right: 1.5px solid #2d2e4a;
   z-index: 201;
   box-shadow: none;
-  transition: left 0.22s cubic-bezier(.4,0,.2,1), background 0.18s, width 0.18s;
+  transition: left 0.22s cubic-bezier(.4,0,.2,1);
+  pointer-events: none;
+  opacity: 0;
 }
+.sidebar.open {
+  left: 0;
+  pointer-events: auto;
+  opacity: 1;
+}
+
+/* Modal for create board */
+.sidebar-modal-bg {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.18);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sidebar-modal {
+  background: #23243a;
+  border-radius: 10px;
+  padding: 24px 20px 18px 20px;
+  min-width: 260px;
+  box-shadow: 0 2px 16px 0 #0002;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sidebar-modal h4 {
+  margin: 0 0 8px 0;
+  color: #a78bfa;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.sidebar-modal input {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1.5px solid #a78bfa;
+  font-size: 1rem;
+  background: #181a1b;
+  color: #f3f6fa;
+  margin-bottom: 8px;
+}
+.sidebar-modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
 .sidebar-logo-row {
   display: flex;
   align-items: center;
@@ -183,21 +232,14 @@ body.light .sidebar-theme-toggle {
   background: #e5e7eb;
 }
 
-.sidebar-overlay {
-  position: fixed;
-  top: 64px;
-  left: 0;
-  width: 100vw;
-  height: calc(100vh - 64px);
-  background: rgba(0,0,0,0.18);
-  z-index: 200;
-  transition: background 0.18s;
-}
-
 @media (max-width: 700px) {
   .sidebar {
     width: 80vw;
     min-width: 180px;
     max-width: 320px;
+    left: -80vw;
+  }
+  .sidebar.open {
+    left: 0;
   }
 } 
