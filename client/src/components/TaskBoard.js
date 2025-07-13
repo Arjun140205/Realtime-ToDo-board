@@ -69,25 +69,25 @@ const TaskBoard = ({ tasks, setTasks }) => {
       {/* Kanban board */}
       <div className="kanban-board-wrapper">
         <div className="kanban-board">
-          {columns.map((status) => (
-            <div
-              key={status}
+        {columns.map((status) => (
+          <div
+            key={status}
               className="kanban-column"
-              onDragOver={(e) => e.preventDefault()}
-              onDrop={(e) => {
-                const taskId = e.dataTransfer.getData('taskId');
-                handleDrop(taskId, status);
-              }}
-            >
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => {
+              const taskId = e.dataTransfer.getData('taskId');
+              handleDrop(taskId, status);
+            }}
+          >
               <div className="column-header">
                 <h3 className="column-title">{status}</h3>
               </div>
-              {tasks.filter(t => t.status === status).map(task => (
-                <TaskCard key={task._id} task={task} />
-              ))}
-            </div>
-          ))}
-        </div>
+            {tasks.filter(t => t.status === status).map(task => (
+              <TaskCard key={task._id} task={task} />
+            ))}
+          </div>
+        ))}
+      </div>
       </div>
       {/* Conflict Resolution Modal */}
       {conflictData && (
