@@ -93,7 +93,7 @@
 }
 .smart-assign-btn {
   margin-top: 6px;
-  background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%);
+  background: #3b82f6;
   color: #fff;
   border: none;
   border-radius: 999px;
@@ -102,13 +102,13 @@
   font-weight: 600;
   letter-spacing: 1px;
   cursor: pointer;
-  box-shadow: 0 2px 8px 0 #2563eb33;
-  transition: background 0.14s, box-shadow 0.14s, transform 0.14s;
+  box-shadow: none;
+  transition: background 0.14s, transform 0.14s;
   align-self: flex-end;
 }
 .smart-assign-btn:hover, .smart-assign-btn:focus {
-  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
-  box-shadow: 0 4px 18px 0 #2563eb33;
+  background: #2563eb;
+  box-shadow: none;
   transform: translateY(-1px) scale(1.03);
 }
 @media (max-width: 700px) {
