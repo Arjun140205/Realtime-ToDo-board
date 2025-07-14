@@ -101,32 +101,35 @@ const TaskBoard = ({ tasks, setTasks }) => {
       {showForm && (
         <div className="task-modal-overlay" onClick={() => setShowForm(null)}>
           <div className="task-form-modal" onClick={e => e.stopPropagation()}>
-            <h3 style={{marginBottom: 10}}>Add new task</h3>
-            <form onSubmit={handleCreate}>
+            <h3>Add new task</h3>
+            <form onSubmit={handleCreate} autoComplete="off">
+              <label htmlFor="task-title">title</label>
               <input
+                id="task-title"
                 type="text"
                 placeholder="Title"
                 value={newTask.title}
                 onChange={e => setNewTask({ ...newTask, title: e.target.value })}
                 required
-                style={{marginBottom: 8}}
               />
+              <label htmlFor="task-desc">description</label>
               <textarea
+                id="task-desc"
                 placeholder="Description"
                 value={newTask.description}
                 onChange={e => setNewTask({ ...newTask, description: e.target.value })}
-                style={{marginBottom: 8, minHeight: 60}}
               />
+              <label htmlFor="task-priority">Priority</label>
               <select
+                id="task-priority"
                 value={newTask.priority}
                 onChange={e => setNewTask({ ...newTask, priority: e.target.value })}
-                style={{marginBottom: 8}}
               >
                 <option value="Low">Low</option>
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>
               </select>
-              <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end', marginTop: 10 }}>
+              <div className="task-form-actions">
                 <button type="submit">Save</button>
                 <button type="button" onClick={() => setShowForm(null)}>Cancel</button>
               </div>
