@@ -1,13 +1,14 @@
+// eslint-disable-next-line no-unused-vars
 import { useContext, useEffect, useState } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { AuthContext } from '../context/AuthContext';
 import TaskBoard from '../components/TaskBoard';
 import API from '../utils/api';
 import socket from '../utils/socket';
-import ActivityLog from '../components/ActivityLog';
 import './Dashboard.css';
 
 const Dashboard = () => {
-  const { user, logout } = useContext(AuthContext);
+  // Removed unused AuthContext destructuring
   const [tasks, setTasks] = useState([]);
 
   const fetchTasks = async () => {
