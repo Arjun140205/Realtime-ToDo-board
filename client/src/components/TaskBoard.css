@@ -310,53 +310,65 @@ button:focus, .task-card button:focus {
 }
 
 .task-form-modal {
-  background: var(--card-bg);
+  background: #23272f;
   border-radius: 10px;
-  box-shadow: 0 4px 24px 0 #000c, 0 2px 8px 0 var(--accent-hover);
-  padding: 18px 18px 12px 18px;
+  box-shadow: 0 4px 24px 0 #000c, 0 2px 8px 0 #2563eb33;
+  padding: 24px 22px 18px 22px;
+  min-width: 320px;
+  max-width: 95vw;
+  border: 1.5px solid #a78bfa;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  min-width: 260px;
-  border: 1.5px solid var(--border);
-  position: relative;
   animation: fadeIn 0.22s cubic-bezier(.39,.58,.57,1.01);
 }
+.task-form-modal h3 {
+  color: #a78bfa;
+  font-size: 1.18rem;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  text-align: left;
+}
 .task-form-modal input,
+.task-form-modal textarea,
 .task-form-modal select {
-  padding: 7px 10px;
-  border-radius: 5px;
-  border: 1.5px solid var(--border);
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 6px;
+  border: 1.5px solid #a78bfa;
   font-size: 1rem;
   background: #181a1b;
-  color: var(--text-main);
+  color: #f3f6fa;
+  margin-bottom: 8px;
   font-family: inherit;
-  transition: border var(--transition), box-shadow var(--transition);
+  transition: border 0.14s, box-shadow 0.14s;
   box-shadow: none;
 }
 .task-form-modal input:focus,
+.task-form-modal textarea:focus,
 .task-form-modal select:focus {
-  border-color: var(--accent);
+  border-color: #7c3aed;
   outline: none;
-  box-shadow: 0 0 8px 1px var(--accent-hover);
+  box-shadow: 0 0 8px 1px #a78bfa44;
 }
 .task-form-modal button {
-  padding: 7px 0;
+  padding: 8px 22px;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-hover) 100%);
-  color: var(--text-main);
+  background: linear-gradient(90deg, #a78bfa 0%, #7c3aed 100%);
+  color: #23243a;
   font-weight: 700;
   font-size: 1rem;
   border: none;
-  box-shadow: 0 2px 8px 0 var(--accent-hover);
+  box-shadow: 0 2px 8px 0 #a78bfa33;
   cursor: pointer;
   letter-spacing: 1px;
-  transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
+  transition: background 0.14s, box-shadow 0.14s, transform 0.14s;
   margin-top: 6px;
 }
 .task-form-modal button:hover, .task-form-modal button:focus {
-  background: linear-gradient(90deg, var(--accent-hover) 0%, var(--accent) 100%);
-  box-shadow: 0 4px 18px 0 var(--accent-hover);
+  background: linear-gradient(90deg, #7c3aed 0%, #a78bfa 100%);
+  box-shadow: 0 4px 18px 0 #a78bfa33;
+  color: #fff;
   transform: translateY(-1px) scale(1.03);
 }
 
@@ -429,6 +441,17 @@ button:focus, .task-card button:focus {
   font-weight: 600;
 }
 
+.task-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(16,17,20,0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  backdrop-filter: blur(2px);
+}
+
 @media (max-width: 900px) {
   .kanban-board-wrapper {
     max-width: 98vw;
@@ -495,6 +518,10 @@ button:focus, .task-card button:focus {
   .add-list-btn {
     margin-left: 0;
     align-self: flex-end;
+  }
+  .task-form-modal {
+    min-width: 90vw;
+    padding: 12px 4vw 10px 4vw;
   }
 }
 @media (max-width: 500px) {
