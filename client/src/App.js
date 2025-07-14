@@ -37,11 +37,18 @@ const App = () => {
       {showLayout && (
         <Sidebar open={sidebarOpen} onClose={handleSidebarClose} onCreateBoard={handleCreateBoard} />
       )}
-      <div style={{
-        marginTop: showLayout ? NAVBAR_HEIGHT : 0,
-        marginLeft: 0,
-        minHeight: `calc(100vh - ${showLayout ? NAVBAR_HEIGHT : 0}px)`
-      }}>
+      <div
+        className={sidebarOpen ? 'sidebar-push-content' : ''}
+        style={{
+          marginTop: 0,
+          paddingTop: showLayout ? NAVBAR_HEIGHT : 0,
+          paddingLeft: showLayout ? (sidebarOpen ? 220 : 60) : 0,
+          minHeight: `calc(100vh - ${showLayout ? NAVBAR_HEIGHT : 0}px)`,
+          maxWidth: '100vw',
+          overflowX: 'hidden',
+          transition: 'padding-left 0.22s cubic-bezier(.4,0,.2,1), padding-top 0.22s cubic-bezier(.4,0,.2,1)'
+        }}
+      >
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
