@@ -35,6 +35,13 @@ const TaskCard = ({ task }) => {
       <div className="task-card-row">
         <h4 className="task-title">{task.title}</h4>
       </div>
+      <div className="task-assigned-user">
+        {task.assignedTo?.name ? (
+          <span title={task.assignedTo.email || ''}>Assigned to: <b>{task.assignedTo.name}</b></span>
+        ) : (
+          <span className="unassigned">Unassigned</span>
+        )}
+      </div>
       <div className="task-desc">{task.description}</div>
       <div className="task-card-meta">
         <span className={getPriorityClass(task.priority)}>{task.priority?.toLowerCase()}</span>
