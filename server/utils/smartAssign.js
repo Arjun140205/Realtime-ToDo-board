@@ -18,7 +18,13 @@ const getSmartAssignedUser = async () => {
   );
 
   const sorted = userTaskCounts.sort((a, b) => a.count - b.count);
-  return sorted[0]?.user?._id || null;
+  const chosen = sorted[0];
+  if (chosen) {
+    console.log(`[SmartAssign] Chose user: ${chosen.user.name} <${chosen.user.email}> (active tasks: ${chosen.count})`);
+  } else {
+    console.log('[SmartAssign] No users found to assign.');
+  }
+  return chosen?.user?._id || null;
 };
 
 module.exports = { getSmartAssignedUser };
