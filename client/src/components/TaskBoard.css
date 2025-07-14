@@ -310,66 +310,101 @@ button:focus, .task-card button:focus {
 }
 
 .task-form-modal {
-  background: #23272f;
-  border-radius: 10px;
-  box-shadow: 0 4px 24px 0 #000c, 0 2px 8px 0 #2563eb33;
-  padding: 24px 22px 18px 22px;
-  min-width: 320px;
+  background: #23243a;
+  border-radius: 12px;
+  box-shadow: none;
+  padding: 32px 28px 22px 28px;
+  min-width: 340px;
   max-width: 95vw;
-  border: 1.5px solid #a78bfa;
+  border: 1.5px solid #35374a;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  animation: fadeIn 0.22s cubic-bezier(.39,.58,.57,1.01);
+  gap: 0;
+  animation: fadeIn 0.18s cubic-bezier(.39,.58,.57,1.01);
 }
 .task-form-modal h3 {
-  color: #a78bfa;
+  color: #f3f6fa;
   font-size: 1.18rem;
   font-weight: 700;
-  margin: 0 0 10px 0;
+  margin: 0 0 18px 0;
   text-align: left;
+  letter-spacing: 0.2px;
+}
+.task-form-modal label {
+  color: #b0b8d1;
+  font-size: 0.99rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  margin-top: 16px;
+  display: block;
+  letter-spacing: 0.1px;
+}
+.task-form-modal label:first-of-type {
+  margin-top: 0;
 }
 .task-form-modal input,
 .task-form-modal textarea,
 .task-form-modal select {
   width: 100%;
-  padding: 9px 12px;
-  border-radius: 6px;
-  border: 1.5px solid #a78bfa;
+  padding: 10px 12px;
+  border-radius: 7px;
+  border: 1.2px solid #35374a;
   font-size: 1rem;
-  background: #181a1b;
+  background: #23243a;
   color: #f3f6fa;
-  margin-bottom: 8px;
+  margin-bottom: 0;
+  margin-top: 2px;
   font-family: inherit;
-  transition: border 0.14s, box-shadow 0.14s;
+  transition: border 0.13s;
   box-shadow: none;
+  outline: none;
 }
 .task-form-modal input:focus,
 .task-form-modal textarea:focus,
 .task-form-modal select:focus {
-  border-color: #7c3aed;
-  outline: none;
-  box-shadow: 0 0 8px 1px #a78bfa44;
+  border-color: #a78bfa;
+}
+.task-form-modal textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+.task-form-modal .task-form-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: flex-end;
+  margin-top: 28px;
 }
 .task-form-modal button {
-  padding: 8px 22px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #a78bfa 0%, #7c3aed 100%);
-  color: #23243a;
+  padding: 0.7em 2.2em;
+  border-radius: 8px;
+  background: none;
   font-weight: 700;
   font-size: 1rem;
-  border: none;
-  box-shadow: 0 2px 8px 0 #a78bfa33;
+  border: 1.2px solid #35374a;
+  box-shadow: none;
   cursor: pointer;
-  letter-spacing: 1px;
-  transition: background 0.14s, box-shadow 0.14s, transform 0.14s;
-  margin-top: 6px;
+  letter-spacing: 0.5px;
+  transition: background 0.13s, color 0.13s, border 0.13s;
+  margin-top: 0;
 }
-.task-form-modal button:hover, .task-form-modal button:focus {
-  background: linear-gradient(90deg, #7c3aed 0%, #a78bfa 100%);
-  box-shadow: 0 4px 18px 0 #a78bfa33;
+.task-form-modal button[type="submit"] {
+  background: #6d6afc;
   color: #fff;
-  transform: translateY(-1px) scale(1.03);
+  border: 1.2px solid #6d6afc;
+}
+.task-form-modal button[type="submit"]:hover, .task-form-modal button[type="submit"]:focus {
+  background: #514fd6;
+  border-color: #514fd6;
+}
+.task-form-modal button[type="button"] {
+  background: none;
+  color: #e57373;
+  border: 1.2px solid #e57373;
+}
+.task-form-modal button[type="button"]:hover, .task-form-modal button[type="button"]:focus {
+  background: #2d2e4a;
+  color: #fff;
+  border-color: #e57373;
 }
 
 .column-header {
@@ -449,7 +484,7 @@ button:focus, .task-card button:focus {
   align-items: center;
   justify-content: center;
   z-index: 1001;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(1.5px);
 }
 
 @media (max-width: 900px) {
@@ -520,8 +555,8 @@ button:focus, .task-card button:focus {
     align-self: flex-end;
   }
   .task-form-modal {
-    min-width: 90vw;
-    padding: 12px 4vw 10px 4vw;
+    min-width: 96vw;
+    padding: 12px 2vw 10px 2vw;
   }
 }
 @media (max-width: 500px) {
