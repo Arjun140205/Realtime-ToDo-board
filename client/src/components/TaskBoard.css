@@ -49,6 +49,7 @@ body, #root {
   box-shadow: none;
   transition: none;
   position: relative;
+  margin-bottom: 48px;
 }
 .kanban-board:hover, .kanban-board:focus-within {
   box-shadow: none;
@@ -58,10 +59,10 @@ body, #root {
   flex: 1 1 0;
   padding: 18px 10px 18px 10px;
   border-radius: 16px;
-  min-width: 260px;
+  min-width: 210px;
   max-width: 1fr;
   min-height: 340px;
-  background: #23243a;
+  background: #26283a;
   box-shadow: none;
   display: flex;
   flex-direction: column;
