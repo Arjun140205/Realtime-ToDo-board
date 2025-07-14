@@ -5,9 +5,9 @@ import './TaskBoard.css';
 
 const TaskBoard = ({ tasks, setTasks }) => {
   const columns = ['Todo', 'In Progress', 'Done'];
-  const [newTask, setNewTask] = useState({ title: '', description: '', priority: 'Medium' });
+  const [newTask, setNewTask] = useState({ title: '', description: '', priority: 'Medium', status: 'Todo' });
+  const [showForm, setShowForm] = useState({}); // { [status]: boolean }
   const [conflictData, setConflictData] = useState(null);
-  const [showForm, setShowForm] = useState(false);
 
   const handleDrop = async (taskId, newStatus) => {
     try {
@@ -49,11 +49,12 @@ const TaskBoard = ({ tasks, setTasks }) => {
     }
   };
 
-  const handleCreate = async (e) => {
+  const handleCreate = async (e, status) => {
     e.preventDefault();
     try {
-      const res = await API.post('/tasks', newTask);
-      setNewTask({ title: '', description: '', priority: 'Medium' });
+      const res = await API.post('/tasks', { ...newTask, status });
+      setNewTask({ title: '', description: '', priority: 'Medium', status: 'Todo' });
+      setShowForm((prev) => ({ ...prev, [status]: false }));
     } catch (err) {
       alert(err.response?.data?.message || 'Failed to create task');
     }
@@ -61,10 +62,9 @@ const TaskBoard = ({ tasks, setTasks }) => {
 
   return (
     <div>
-      {/* Board Title and New List Button */}
+      {/* Board Title */}
       <div className="board-header">
         <h2 className="board-title">Work Tasks</h2>
-        <button className="add-list-btn" type="button">+ new List</button>
       </div>
       {/* Kanban board */}
       <div className="kanban-board-wrapper">
@@ -72,19 +72,52 @@ const TaskBoard = ({ tasks, setTasks }) => {
         {columns.map((status) => (
           <div
             key={status}
-              className="kanban-column"
+            className="kanban-column"
             onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => {
               const taskId = e.dataTransfer.getData('taskId');
               handleDrop(taskId, status);
             }}
           >
-              <div className="column-header">
-                <h3 className="column-title">{status}</h3>
-              </div>
+            <div className="column-header">
+              <h3 className="column-title">{status}</h3>
+            </div>
             {tasks.filter(t => t.status === status).map(task => (
               <TaskCard key={task._id} task={task} />
             ))}
+            {/* Add Task Form at bottom of each column */}
+            {showForm[status] ? (
+              <form className="add-task-form" onSubmit={(e) => handleCreate(e, status)}>
+                <input
+                  type="text"
+                  placeholder="Title"
+                  value={newTask.title}
+                  onChange={e => setNewTask({ ...newTask, title: e.target.value })}
+                  required
+                />
+                <textarea
+                  placeholder="Description"
+                  value={newTask.description}
+                  onChange={e => setNewTask({ ...newTask, description: e.target.value })}
+                />
+                <select
+                  value={newTask.priority}
+                  onChange={e => setNewTask({ ...newTask, priority: e.target.value })}
+                >
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                </select>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <button type="submit">Add</button>
+                  <button type="button" onClick={() => setShowForm(prev => ({ ...prev, [status]: false }))}>Cancel</button>
+                </div>
+              </form>
+            ) : (
+              <button className="add-task-btn" onClick={() => setShowForm(prev => ({ ...prev, [status]: true }))}>
+                + Add Task
+              </button>
+            )}
           </div>
         ))}
       </div>
