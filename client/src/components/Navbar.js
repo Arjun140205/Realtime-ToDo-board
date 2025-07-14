@@ -1,10 +1,19 @@
 import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({ onHamburgerClick }) => {
   const location = useLocation();
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
   // Hide on login/register
   if (["/", "/login", "/register"].includes(location.pathname)) return null;
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -19,6 +28,7 @@ const Navbar = ({ onHamburgerClick }) => {
       <div className="navbar-links">
         <Link to="/dashboard" className="nav-link">Work Tasks</Link>
         <Link to="/about" className="nav-link">About</Link>
+        <button className="nav-link logout-btn" onClick={handleLogout}>Logout</button>
       </div>
     </nav>
   );
