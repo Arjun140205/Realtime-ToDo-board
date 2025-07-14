@@ -1,28 +1,35 @@
 .footer {
   width: 100%;
-  position: relative;
+  position: sticky;
   bottom: 0;
   left: 0;
-  z-index: 10;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
-  min-height: 44px;
-  background: #181a1b;
-  border-top: 1.5px solid #23263a;
-  box-shadow: none;
+  padding: 18px 0 12px 0;
+  min-height: 54px;
+  background: rgba(28,30,34,0.92);
+  border-top: 1.5px solid #3b3c4a;
+  box-shadow: 0 -2px 24px 0 #0003;
   overflow: hidden;
   transition: background 0.14s, min-height 0.14s, padding 0.14s;
+  backdrop-filter: blur(8px);
 }
 .footer-text {
-  font-size: 0.98rem;
+  font-size: 1.13rem;
   color: #b0b8d1;
-  font-weight: 600;
-  letter-spacing: 1px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
   z-index: 2;
   position: relative;
   text-align: center;
+  opacity: 0.98;
+}
+.footer-text .footer-brand {
+  color: #a78bfa;
+  font-weight: 800;
+  letter-spacing: 1.2px;
 }
 .footer-anim-bg {
   display: none;
