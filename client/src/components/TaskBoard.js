@@ -52,7 +52,7 @@ const TaskBoard = ({ tasks, setTasks }) => {
   const handleCreate = async (e) => {
     e.preventDefault();
     try {
-      const res = await API.post('/tasks', { ...newTask, status: showForm });
+      await API.post('/tasks', { ...newTask, status: showForm });
       setNewTask({ title: '', description: '', priority: 'Medium', status: 'Todo' });
       setShowForm(null);
     } catch (err) {
