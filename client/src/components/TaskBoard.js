@@ -6,7 +6,7 @@ import './TaskBoard.css';
 const TaskBoard = ({ tasks, setTasks }) => {
   const columns = ['Todo', 'In Progress', 'Done'];
   const [newTask, setNewTask] = useState({ title: '', description: '', priority: 'Medium', status: 'Todo' });
-  const [showForm, setShowForm] = useState({}); // { [status]: boolean }
+  const [showForm, setShowForm] = useState(null); // status string or null
   const [conflictData, setConflictData] = useState(null);
 
   const handleDrop = async (taskId, newStatus) => {
@@ -49,15 +49,20 @@ const TaskBoard = ({ tasks, setTasks }) => {
     }
   };
 
-  const handleCreate = async (e, status) => {
+  const handleCreate = async (e) => {
     e.preventDefault();
     try {
-      const res = await API.post('/tasks', { ...newTask, status });
+      const res = await API.post('/tasks', { ...newTask, status: showForm });
       setNewTask({ title: '', description: '', priority: 'Medium', status: 'Todo' });
-      setShowForm((prev) => ({ ...prev, [status]: false }));
+      setShowForm(null);
     } catch (err) {
       alert(err.response?.data?.message || 'Failed to create task');
     }
+  };
+
+  const openForm = (status) => {
+    setShowForm(status);
+    setNewTask({ title: '', description: '', priority: 'Medium', status });
   };
 
   return (
@@ -85,43 +90,50 @@ const TaskBoard = ({ tasks, setTasks }) => {
             {tasks.filter(t => t.status === status).map(task => (
               <TaskCard key={task._id} task={task} />
             ))}
-            {/* Add Task Form at bottom of each column */}
-            {showForm[status] ? (
-              <form className="add-task-form" onSubmit={(e) => handleCreate(e, status)}>
-                <input
-                  type="text"
-                  placeholder="Title"
-                  value={newTask.title}
-                  onChange={e => setNewTask({ ...newTask, title: e.target.value })}
-                  required
-                />
-                <textarea
-                  placeholder="Description"
-                  value={newTask.description}
-                  onChange={e => setNewTask({ ...newTask, description: e.target.value })}
-                />
-                <select
-                  value={newTask.priority}
-                  onChange={e => setNewTask({ ...newTask, priority: e.target.value })}
-                >
-                  <option value="Low">Low</option>
-                  <option value="Medium">Medium</option>
-                  <option value="High">High</option>
-                </select>
-                <div style={{ display: 'flex', gap: 8 }}>
-                  <button type="submit">Add</button>
-                  <button type="button" onClick={() => setShowForm(prev => ({ ...prev, [status]: false }))}>Cancel</button>
-                </div>
-              </form>
-            ) : (
-              <button className="add-task-btn" onClick={() => setShowForm(prev => ({ ...prev, [status]: true }))}>
-                + Add Task
-              </button>
-            )}
+            <button className="add-task-btn" onClick={() => openForm(status)}>
+              + Add Task
+            </button>
           </div>
         ))}
       </div>
       </div>
+      {/* Add Task Modal */}
+      {showForm && (
+        <div className="task-modal-overlay" onClick={() => setShowForm(null)}>
+          <div className="task-form-modal" onClick={e => e.stopPropagation()}>
+            <h3 style={{marginBottom: 10}}>Add new task</h3>
+            <form onSubmit={handleCreate}>
+              <input
+                type="text"
+                placeholder="Title"
+                value={newTask.title}
+                onChange={e => setNewTask({ ...newTask, title: e.target.value })}
+                required
+                style={{marginBottom: 8}}
+              />
+              <textarea
+                placeholder="Description"
+                value={newTask.description}
+                onChange={e => setNewTask({ ...newTask, description: e.target.value })}
+                style={{marginBottom: 8, minHeight: 60}}
+              />
+              <select
+                value={newTask.priority}
+                onChange={e => setNewTask({ ...newTask, priority: e.target.value })}
+                style={{marginBottom: 8}}
+              >
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select>
+              <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end', marginTop: 10 }}>
+                <button type="submit">Save</button>
+                <button type="button" onClick={() => setShowForm(null)}>Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
       {/* Conflict Resolution Modal */}
       {conflictData && (
         <div className="conflict-modal-overlay">
