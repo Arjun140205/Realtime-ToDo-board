@@ -58,4 +58,14 @@ const getProfile = async (req, res) => {
   res.json(user);
 };
 
-module.exports = { registerUser, loginUser, getProfile };
+// TEMP: List all users (for debugging)
+const listUsers = async (req, res) => {
+  try {
+    const users = await User.find().select('-password');
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch users' });
+  }
+};
+
+module.exports = { registerUser, loginUser, getProfile, listUsers };
