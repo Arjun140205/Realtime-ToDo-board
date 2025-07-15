@@ -5,7 +5,13 @@ import './ActivityLog.css';
 
 const formatTime = (iso) => {
   const d = new Date(iso);
-  return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  return d.toLocaleDateString('en-US', { 
+    month: 'short', 
+    day: 'numeric' 
+  }) + ' ' + d.toLocaleTimeString([], { 
+    hour: '2-digit', 
+    minute: '2-digit' 
+  });
 };
 
 const ActivityLog = () => {
@@ -35,20 +41,49 @@ const ActivityLog = () => {
   }, []);
 
   return (
-    <aside className="activity-log-panel">
-      <h3 className="activity-log-title">Activity Log</h3>
-      <ul className="activity-log-list">
-        {logs.map((log) => (
-          <li key={log._id} className="activity-log-item">
-            <span className="log-time">{formatTime(log.timestamp)}</span>
-            <span className="log-user">{log.user?.name || 'Unknown'}</span>
-            <span className="log-action">{log.action}</span>
-            <span className="log-task">{log.task?.title ? `"${log.task.title}"` : ''}</span>
-            <span className="log-desc">{log.description}</span>
-          </li>
-        ))}
-      </ul>
-    </aside>
+    <div className="activity-log-page">
+      <div className="activity-log-container">
+        <div className="activity-log-header">
+          <h1 className="activity-log-title">Activity Log</h1>
+          <p className="activity-log-subtitle">Track all task activities and changes</p>
+        </div>
+        
+        <div className="activity-log-content">
+          <table className="activity-log-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>User</th>
+                <th>Action</th>
+                <th>Task</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              {logs.length > 0 ? (
+                logs.map((log) => (
+                  <tr key={log._id} className="activity-log-row">
+                    <td className="log-time">{formatTime(log.timestamp)}</td>
+                    <td className="log-user">{log.user?.name || 'Unknown'}</td>
+                    <td className="log-action">{log.action}</td>
+                    <td className="log-task">
+                      {log.task?.title ? `"${log.task.title}"` : '—'}
+                    </td>
+                    <td className="log-details">{log.description}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5" className="no-logs">
+                    No activity logs found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   );
 };
 
