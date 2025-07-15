@@ -22,8 +22,18 @@ const TaskCard = ({ task }) => {
     }
   };
 
-  // Get date for display
-  const date = task.dueDate ? new Date(task.dueDate).toLocaleDateString() : 'Jul 13, 2025';
+  // Get creation date for display
+  const date = task.createdAt 
+    ? new Date(task.createdAt).toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
+      })
+    : new Date().toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
+      });
 
   return (
     <div
