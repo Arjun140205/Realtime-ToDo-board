@@ -22,8 +22,7 @@ const TaskCard = ({ task }) => {
     }
   };
 
-  // Placeholder for progress and date (replace with real data if available)
-  const progress = task.progress || '1/2';
+  // Get date for display
   const date = task.dueDate ? new Date(task.dueDate).toLocaleDateString() : 'Jul 13, 2025';
 
   return (
@@ -32,23 +31,28 @@ const TaskCard = ({ task }) => {
       onDragStart={handleDragStart}
       className="task-card fade-in"
     >
-      <div className="task-card-row">
+      <div className="task-card-header">
         <h4 className="task-title">{task.title}</h4>
+        <span className="task-date">{date}</span>
       </div>
+      
       <div className="task-assigned-user">
         {task.assignedTo?.name ? (
-          <span title={task.assignedTo.email || ''}>Assigned to: <b>{task.assignedTo.name}</b></span>
+          <span title={task.assignedTo.email || ''}>
+            <span className="assigned-label">Assigned to:</span>
+            <span className="assigned-name">{task.assignedTo.name}</span>
+          </span>
         ) : (
           <span className="unassigned">Unassigned</span>
         )}
       </div>
+      
       <div className="task-desc">{task.description}</div>
-      <div className="task-card-meta">
+      
+      <div className="task-card-footer">
         <span className={getPriorityClass(task.priority)}>{task.priority?.toLowerCase()}</span>
-        <span className="task-progress">{progress}</span>
-        <span className="task-date">{date}</span>
+        <button onClick={handleSmartAssign} className="smart-assign-btn">Smart Assign</button>
       </div>
-      <button onClick={handleSmartAssign} className="smart-assign-btn">Smart Assign</button>
     </div>
   );
 };
