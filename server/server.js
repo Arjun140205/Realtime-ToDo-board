@@ -31,7 +31,7 @@ app.set('io', io); // make io accessible in controllers if needed
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001'], // frontend origins
+  origin: ['http://localhost:3000', 'http://localhost:3001', 'https://realtime-to-do-board.vercel.app'], // frontend origins
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
