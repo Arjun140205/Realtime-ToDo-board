@@ -85,15 +85,16 @@ body, #root {
 
 .column-title {
   text-align: left;
-  margin-bottom: 14px;
-  font-size: 1.18rem;
+  font-size: 1.1rem;
   color: #f3f6fa;
-  letter-spacing: 1.1px;
-  font-weight: 700;
+  letter-spacing: 1.0px;
+  font-weight: 600;
   text-shadow: none;
   opacity: 0.98;
   transition: color 0.14s;
-  padding-left: 2px;
+  padding-left: 0;
+  margin: 0;
+  line-height: 1.2;
 }
 
 .task-card {
@@ -406,10 +407,67 @@ button:focus, .task-card button:focus {
 
 .column-header {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 14px;
-  min-height: 38px;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  min-height: 20px;
+  padding-top: 0;
+}
+
+/* Column options dropdown */
+.column-options {
+  position: relative;
+}
+
+.options-btn {
+  background: none;
+  border: none;
+  color: #b0b8d1;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: all 0.14s;
+  line-height: 1;
+}
+
+.options-btn:hover {
+  background: rgba(176, 184, 209, 0.1);
+  color: #f3f6fa;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #2a2d3a;
+  border: 1px solid #35374a;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  min-width: 160px;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.dropdown-menu button {
+  width: 100%;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  color: #b0b8d1;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background 0.14s;
+}
+
+.dropdown-menu button:hover {
+  background: rgba(176, 184, 209, 0.1);
+  color: #f3f6fa;
+}
+
+.dropdown-menu button:not(:last-child) {
+  border-bottom: 1px solid #35374a;
 }
 
 .add-task-btn {
@@ -577,4 +635,4 @@ button:focus, .task-card button:focus {
     padding: 6px 2px 4px 2px;
     font-size: 0.98rem;
   }
-} 
+}
