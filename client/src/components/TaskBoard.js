@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TaskCard from './TaskCard';
 import API from '../utils/api';
 import './TaskBoard.css';
@@ -8,6 +8,8 @@ const TaskBoard = ({ tasks, setTasks }) => {
   const [newTask, setNewTask] = useState({ title: '', description: '', priority: 'Medium', status: 'Todo' });
   const [showForm, setShowForm] = useState(null); // status string or null
   const [conflictData, setConflictData] = useState(null);
+  const [sortOptions, setSortOptions] = useState({}); // { [status]: sortType }
+  const [showDropdown, setShowDropdown] = useState(null); // which column dropdown is open
 
   const handleDrop = async (taskId, newStatus) => {
     try {
@@ -65,6 +67,47 @@ const TaskBoard = ({ tasks, setTasks }) => {
     setNewTask({ title: '', description: '', priority: 'Medium', status });
   };
 
+  // Sorting functions
+  const sortTasks = (tasks, sortType) => {
+    const tasksCopy = [...tasks];
+    switch (sortType) {
+      case 'priority':
+        return tasksCopy.sort((a, b) => {
+          const priorityOrder = { 'High': 3, 'Medium': 2, 'Low': 1 };
+          return priorityOrder[b.priority] - priorityOrder[a.priority];
+        });
+      case 'date':
+        return tasksCopy.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      case 'alphabetical':
+        return tasksCopy.sort((a, b) => a.title.localeCompare(b.title));
+      default:
+        return tasksCopy;
+    }
+  };
+
+  const handleSort = (status, sortType) => {
+    setSortOptions(prev => ({ ...prev, [status]: sortType }));
+    setShowDropdown(null);
+  };
+
+  const getFilteredAndSortedTasks = (status) => {
+    const filtered = tasks.filter(t => t.status === status);
+    const sortType = sortOptions[status];
+    return sortType ? sortTasks(filtered, sortType) : filtered;
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest('.column-options')) {
+        setShowDropdown(null);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
+
   return (
     <div>
       {/* Board Title */}
@@ -86,8 +129,32 @@ const TaskBoard = ({ tasks, setTasks }) => {
           >
             <div className="column-header">
               <h3 className="column-title">{status}</h3>
+              <div className="column-options">
+                <button 
+                  className="options-btn"
+                  onClick={() => setShowDropdown(showDropdown === status ? null : status)}
+                >
+                  ⋯
+                </button>
+                {showDropdown === status && (
+                  <div className="dropdown-menu">
+                    <button onClick={() => handleSort(status, 'priority')}>
+                      Sort by Priority
+                    </button>
+                    <button onClick={() => handleSort(status, 'date')}>
+                      Sort by Date
+                    </button>
+                    <button onClick={() => handleSort(status, 'alphabetical')}>
+                      Sort Alphabetically
+                    </button>
+                    <button onClick={() => handleSort(status, null)}>
+                      Clear Sort
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
-            {tasks.filter(t => t.status === status).map(task => (
+            {getFilteredAndSortedTasks(status).map(task => (
               <TaskCard key={task._id} task={task} />
             ))}
             <button className="add-task-btn" onClick={() => openForm(status)}>
