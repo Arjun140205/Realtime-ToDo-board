@@ -109,7 +109,7 @@ const TaskBoard = ({ tasks, setTasks }) => {
   }, []);
 
   return (
-    <div>
+    <div className="taskboard-container">
       {/* Board Title */}
       <div className="board-header">
         <h2 className="board-title">Work Tasks</h2>
