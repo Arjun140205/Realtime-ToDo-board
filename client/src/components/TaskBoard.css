@@ -1,3 +1,9 @@
+/* Main TaskBoard Container */
+.taskboard-container {
+  padding-top: 80px;
+  min-height: 100vh;
+}
+
 /* Kanba-Hazel Inspired Minimal Dark Kanban Board */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
@@ -270,7 +276,7 @@ button:focus, .task-card button:focus {
   align-items: center;
   justify-content: space-between;
   max-width: 1200px;
-  margin: 38px auto 0 auto;
+  margin: 20px auto 0 auto;
   padding: 0 0 8px 0;
   position: relative;
 }
@@ -558,7 +564,7 @@ button:focus, .task-card button:focus {
   }
   .board-header {
     max-width: 98vw;
-    margin: 18px auto 0 auto;
+    margin: 30px auto 0 auto;
     padding: 0 0 4px 0;
   }
   .board-title {
@@ -603,7 +609,7 @@ button:focus, .task-card button:focus {
     flex-direction: column;
     align-items: flex-start;
     gap: 6px;
-    margin: 8px auto 0 auto;
+    margin: 20px auto 0 auto;
     padding: 0 0 2px 0;
   }
   .add-list-btn {
