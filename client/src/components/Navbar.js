@@ -20,13 +20,12 @@ const Navbar = ({ onHamburgerClick }) => {
         <button className="navbar-hamburger" aria-label="Menu" onClick={onHamburgerClick}>
           <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="7" x2="23" y2="7"/><line x1="5" y1="14" x2="23" y2="14"/><line x1="5" y1="21" x2="23" y2="21"/></svg>
         </button>
-        <span className="navbar-logo">
+        <Link to="/dashboard" className="navbar-logo">
           <img src="/Kanba.png" alt="Kanba Logo" className="navbar-logo-img" />
           <span className="navbar-logo-text">TO-DO board</span>
-        </span>
+        </Link>
       </div>
       <div className="navbar-links">
-        <Link to="/dashboard" className="nav-link">Work Tasks</Link>
         <Link to="/about" className="nav-link">About</Link>
         <button className="nav-link logout-btn" onClick={handleLogout}>Logout</button>
       </div>
