@@ -1,4 +1,4 @@
-# 🧠 LogicDocument.md  
+# LogicDocument.md  
 **Real-Time Collaborative To-Do Board – Internshala Full Stack Assignment (July 2025)**
 
 This document details the logic and algorithmic approach behind two core features implemented in the project:
