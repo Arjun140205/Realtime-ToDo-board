@@ -41,7 +41,16 @@ const ActivityLog = () => {
   }, []);
 
   return (
-    <div className="activity-log-page">
+    <div 
+      className="activity-log-page"
+      style={{
+        backgroundImage: 'url("/dashboard.jpg")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed'
+      }}
+    >
       <div className="activity-log-container">
         <div className="activity-log-header">
           <h1 className="activity-log-title">Activity Log</h1>
