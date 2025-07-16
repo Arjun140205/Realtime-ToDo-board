@@ -131,14 +131,29 @@ const TaskBoard = ({ tasks, setTasks }) => {
       {/* Kanban board */}
       <div className="kanban-board-wrapper">
         <div className="kanban-board">
-        {columns.map((status) => (
+        {columns.map((status) => {
+          const tasksInColumn = getFilteredAndSortedTasks(status);
+          const taskCount = tasksInColumn.length;
+          
+          return (
           <div
             key={status}
-            className="kanban-column"
+            className={`kanban-column ${taskCount === 0 ? 'empty-column' : 'has-tasks'}`}
             data-status={status}
-            onDragOver={(e) => e.preventDefault()}
+            data-task-count={taskCount}
+            onDragOver={(e) => {
+              e.preventDefault();
+              e.currentTarget.classList.add('drag-over');
+            }}
+            onDragLeave={(e) => {
+              // Only remove if not dragging over a child element
+              if (!e.currentTarget.contains(e.relatedTarget)) {
+                e.currentTarget.classList.remove('drag-over');
+              }
+            }}
             onDrop={(e) => {
               console.log('Column drop event triggered for status:', status);
+              e.currentTarget.classList.remove('drag-over');
               const taskId = e.dataTransfer.getData('taskId');
               console.log('Retrieved taskId from dataTransfer:', taskId);
               if (taskId) {
@@ -175,7 +190,7 @@ const TaskBoard = ({ tasks, setTasks }) => {
                 )}
               </div>
             </div>
-            {getFilteredAndSortedTasks(status).map(task => (
+            {tasksInColumn.map(task => (
               <TaskCard 
                 key={task._id} 
                 task={task} 
@@ -187,7 +202,8 @@ const TaskBoard = ({ tasks, setTasks }) => {
               + Add Task
             </button>
           </div>
-        ))}
+        );
+        })}
       </div>
       </div>
       {/* Add Task Modal */}
