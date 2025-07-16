@@ -58,11 +58,6 @@ const Login = () => {
       <p style={{ textAlign: 'center', marginTop: '20px' }}>
         Don't have an account? <Link to="/register">Register here</Link>
       </p>
-      <div style={{ marginTop: '20px', padding: '10px', backgroundColor: '#f8f9fa', border: '1px solid #dee2e6' }}>
-        <strong>Test Credentials:</strong><br />
-        Email: test@test.com<br />
-        Password: 123456
-      </div>
     </div>
   );
 };
