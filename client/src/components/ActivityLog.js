@@ -58,7 +58,8 @@ const ActivityLog = () => {
         </div>
         
         <div className="activity-log-content">
-          <table className="activity-log-table">
+          <div className='activity-log-table-wrapper'>
+            <table className="activity-log-table">
             <thead>
               <tr>
                 <th>Time</th>
@@ -90,6 +91,7 @@ const ActivityLog = () => {
               )}
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </div>

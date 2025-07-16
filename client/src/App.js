@@ -60,15 +60,15 @@ const App = () => {
       {/* Mobile overlay when sidebar is open */}
       {showLayout && sidebarOpen && isMobile && (
         <div 
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-            background: 'rgba(0, 0, 0, 0.5)',
-            zIndex: 999,
-          }}
+          // style={{
+          //   position: 'fixed',
+          //   top: 0,
+          //   left: 0,
+          //   width: '100vw',
+          //   height: '100vh',
+          //   background: 'rgba(0, 0, 0, 0.5)',
+          //   zIndex: 999,
+          // }}
           onClick={handleSidebarClose}
         />
       )}

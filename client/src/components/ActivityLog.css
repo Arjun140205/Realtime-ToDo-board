@@ -309,3 +309,17 @@
     max-width: 150px;
   }
 }
+
+.activity-log-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* for smooth scroll on iOS */
+}
+
+.activity-log-table-wrapper::-webkit-scrollbar {
+  height: 6px;
+}
+.activity-log-table-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 10px;
+}

@@ -255,7 +255,7 @@ body.light .sidebar-theme-toggle {
 
 /* Content push class for main content */
 .sidebar-push-content {
-  margin-left: 220px !important;
+  /* margin-left: 220px !important; */
   transition: margin-left 0.22s cubic-bezier(.4,0,.2,1);
 }
 @media (max-width: 900px) {
