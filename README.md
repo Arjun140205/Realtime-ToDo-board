@@ -1,4 +1,4 @@
-# 🚀 Real-Time Collaborative To-Do Board
+# Real-Time Collaborative To-Do Board
 
 A collaborative task management application built with React, Node.js, MongoDB, and Socket.IO. Features real-time updates, smart task assignment, and conflict resolution for seamless team productivity.
 
