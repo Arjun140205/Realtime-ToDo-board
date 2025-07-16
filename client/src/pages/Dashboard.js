@@ -42,7 +42,16 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="dashboard-main">
+    <div 
+      className="dashboard-main"
+      style={{
+        backgroundImage: 'url("/dashboard.jpg")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed'
+      }}
+    >
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', flexWrap: 'wrap' }}>
         <TaskBoard tasks={tasks} setTasks={setTasks} />
       </div>

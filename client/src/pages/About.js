@@ -1,7 +1,16 @@
 import './About.css';
 
 const About = () => (
-  <div className="about-container">
+  <div 
+    className="about-container"
+    style={{
+      backgroundImage: 'url("/about.jpg")',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      backgroundAttachment: 'fixed'
+    }}
+  >
     <div className="about-card">
       <h1 className="about-title">About TodoBoard</h1>
       <p className="about-desc">
