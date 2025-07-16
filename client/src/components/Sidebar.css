@@ -266,17 +266,44 @@ body.light .sidebar-theme-toggle {
     width: 180px;
   }
 }
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   .sidebar {
-    width: 60px;
-    min-width: 60px;
-    max-width: 180px;
-    left: 0;
+    width: 0;
+    min-width: 0;
+    max-width: 280px;
+    left: -60px;
+    transform: translateX(0);
+    transition: transform 0.3s cubic-bezier(.4,0,.2,1), width 0.3s cubic-bezier(.4,0,.2,1);
   }
   .sidebar.open {
-    width: 140px;
+    width: 280px;
+    left: 0;
+    transform: translateX(0);
+    box-shadow: 2px 0 10px rgba(0,0,0,0.3);
   }
   .sidebar-push-content {
-    margin-left: 60px !important;
+    margin-left: 0 !important;
+  }
+  
+  /* Make sidebar items more touch-friendly on mobile */
+  .sidebar-item {
+    min-height: 48px;
+    padding: 12px 16px;
+  }
+  
+  .sidebar-button {
+    min-height: 48px;
+    padding: 12px 16px;
+  }
+  
+  .sidebar-modal {
+    width: 90vw;
+    max-width: 400px;
+    margin: 20px;
+  }
+}
+@media (max-width: 700px) {
+  .sidebar.open {
+    width: 260px;
   }
 } 
