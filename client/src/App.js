@@ -19,6 +19,7 @@ const App = () => {
   const { user } = useContext(AuthContext);
   const showLayout = user && !hideNavFooter;
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [boards, setBoards] = useState([]); // [{ name: string }]
   const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
