@@ -8,7 +8,7 @@ import About from './pages/About';
 import Footer from './components/Footer';
 import Sidebar from './components/Sidebar';
 import ActivityLog from './components/ActivityLog';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from './context/AuthContext';
 
 const NAVBAR_HEIGHT = 64; // px, adjust if your navbar height changes
@@ -20,7 +20,26 @@ const App = () => {
   const showLayout = user && !hideNavFooter;
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [boards, setBoards] = useState([]); // [{ name: string }]
+  const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
+
+  // Detect mobile screen size
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Auto-close sidebar on mobile when navigating
+  useEffect(() => {
+    if (isMobile) {
+      setSidebarOpen(false);
+    }
+  }, [location, isMobile]);
 
   const handleHamburgerClick = () => setSidebarOpen((open) => !open);
   const handleSidebarClose = () => setSidebarOpen(false);
@@ -37,12 +56,27 @@ const App = () => {
       {showLayout && (
         <Sidebar open={sidebarOpen} onClose={handleSidebarClose} onCreateBoard={handleCreateBoard} />
       )}
+      {/* Mobile overlay when sidebar is open */}
+      {showLayout && sidebarOpen && isMobile && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            background: 'rgba(0, 0, 0, 0.5)',
+            zIndex: 999,
+          }}
+          onClick={handleSidebarClose}
+        />
+      )}
       <div
         className={sidebarOpen ? 'sidebar-push-content' : ''}
         style={{
           marginTop: 0,
           paddingTop: showLayout ? NAVBAR_HEIGHT : 0,
-          paddingLeft: showLayout ? (sidebarOpen ? 220 : 60) : 0,
+          paddingLeft: showLayout && !isMobile ? (sidebarOpen ? 220 : 60) : 0,
           minHeight: `calc(100vh - ${showLayout ? NAVBAR_HEIGHT : 0}px)`,
           maxWidth: '100vw',
           overflowX: 'hidden',
