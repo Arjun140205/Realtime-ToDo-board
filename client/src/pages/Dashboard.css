@@ -9,6 +9,24 @@
   min-height: 80vh;
   padding-top: 0;
   margin-top: -42px;
+  position: relative;
+}
+
+.dashboard-main::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dashboard-main > * {
+  position: relative;
+  z-index: 1;
 }
 .board-header {
   margin-top: 0;
