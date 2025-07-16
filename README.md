@@ -87,8 +87,11 @@ Prevents data loss during simultaneous edits using timestamp comparison:
 ## 🌐 Live Demo
 
 **Live App:** [https://realtime-to-do-board.vercel.app](https://realtime-to-do-board.vercel.app)
+
 **Demo Video:** [Watch Demo](https://drive.google.com/file/d/1YEq03SUAw3uC0JqtBoZf1gTO2M1tmS6o/view?usp=sharing)
+
 **GitHub Repository:** [https://github.com/Arjun140205/Realtime-ToDo-board](https://github.com/Arjun140205/Realtime-ToDo-board)
+
 **Backend API:** [https://realtime-todo-board.onrender.com](https://realtime-todo-board.onrender.com)
 
 ---
