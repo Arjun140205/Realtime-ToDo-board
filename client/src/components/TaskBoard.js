@@ -11,18 +11,32 @@ const TaskBoard = ({ tasks, setTasks }) => {
   const [sortOptions, setSortOptions] = useState({}); // { [status]: sortType }
   const [showDropdown, setShowDropdown] = useState(null); // which column dropdown is open
 
+  const handleDragStart = (taskId) => {
+    console.log('Drag started for task:', taskId);
+  };
+
   const handleDrop = async (taskId, newStatus) => {
+    console.log('Drop handler called with:', { taskId, newStatus });
     try {
       const task = tasks.find(t => t._id === taskId);
+      if (!task) {
+        console.error('Task not found:', taskId);
+        return;
+      }
+      
+      console.log('Found task:', task);
       const updated = {
         ...task,
         status: newStatus,
         lastModified: task.lastModified,
       };
 
+      console.log('Updating task to:', updated);
       await API.put(`/tasks/${taskId}`, updated);
+      console.log('Task updated successfully');
       // sync via socket
     } catch (err) {
+      console.error('Drop error:', err);
       if (err.response?.status === 409) {
         setConflictData(err.response.data);
       } else {
@@ -121,10 +135,17 @@ const TaskBoard = ({ tasks, setTasks }) => {
           <div
             key={status}
             className="kanban-column"
+            data-status={status}
             onDragOver={(e) => e.preventDefault()}
             onDrop={(e) => {
+              console.log('Column drop event triggered for status:', status);
               const taskId = e.dataTransfer.getData('taskId');
-              handleDrop(taskId, status);
+              console.log('Retrieved taskId from dataTransfer:', taskId);
+              if (taskId) {
+                handleDrop(taskId, status);
+              } else {
+                console.error('No taskId found in dataTransfer');
+              }
             }}
           >
             <div className="column-header">
@@ -155,7 +176,12 @@ const TaskBoard = ({ tasks, setTasks }) => {
               </div>
             </div>
             {getFilteredAndSortedTasks(status).map(task => (
-              <TaskCard key={task._id} task={task} />
+              <TaskCard 
+                key={task._id} 
+                task={task} 
+                onDragStart={handleDragStart}
+                onDragEnd={handleDrop}
+              />
             ))}
             <button className="add-task-btn" onClick={() => openForm(status)}>
               + Add Task
