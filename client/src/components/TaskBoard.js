@@ -16,11 +16,24 @@ const TaskBoard = ({ tasks, setTasks }) => {
   };
 
   const handleDrop = async (taskId, newStatus) => {
-    console.log('Drop handler called with:', { taskId, newStatus });
+    console.log('Drop handler called with:', { taskId, newStatus, type: typeof taskId });
+    
+    // Validate inputs
+    if (!taskId) {
+      console.error('TaskId is missing or falsy:', taskId);
+      return;
+    }
+    
+    if (!newStatus) {
+      console.error('NewStatus is missing:', newStatus);
+      return;
+    }
+    
     try {
       const task = tasks.find(t => t._id === taskId);
       if (!task) {
         console.error('Task not found:', taskId);
+        console.log('Available tasks:', tasks.map(t => ({ id: t._id, title: t.title })));
         return;
       }
       
@@ -152,14 +165,26 @@ const TaskBoard = ({ tasks, setTasks }) => {
               }
             }}
             onDrop={(e) => {
+              e.preventDefault();
               console.log('Column drop event triggered for status:', status);
               e.currentTarget.classList.remove('drag-over');
-              const taskId = e.dataTransfer.getData('taskId');
-              console.log('Retrieved taskId from dataTransfer:', taskId);
-              if (taskId) {
+              
+              // Get taskId from text/plain (most reliable)
+              const taskId = e.dataTransfer.getData('text/plain');
+              
+              console.log('Retrieved taskId from text/plain:', taskId);
+              console.log('DataTransfer types available:', Array.from(e.dataTransfer.types));
+              
+              if (taskId && taskId.trim() !== '') {
+                console.log('Valid taskId found, calling handleDrop');
                 handleDrop(taskId, status);
               } else {
-                console.error('No taskId found in dataTransfer');
+                console.error('No valid taskId found in dataTransfer');
+                console.log('All available data:', {
+                  'text/plain': e.dataTransfer.getData('text/plain'),
+                  'text/html': e.dataTransfer.getData('text/html'),
+                  'types': Array.from(e.dataTransfer.types)
+                });
               }
             }}
           >
@@ -190,14 +215,20 @@ const TaskBoard = ({ tasks, setTasks }) => {
                 )}
               </div>
             </div>
-            {tasksInColumn.map(task => (
-              <TaskCard 
-                key={task._id} 
-                task={task} 
-                onDragStart={handleDragStart}
-                onDragEnd={handleDrop}
-              />
-            ))}
+            {tasksInColumn.map(task => {
+              console.log('Rendering task:', task, 'ID:', task._id);
+              return (
+                <TaskCard 
+                  key={task._id} 
+                  task={task} 
+                  onDragStart={handleDragStart}
+                  onDragEnd={() => {
+                    // Simple cleanup function for drag end
+                    console.log('Drag ended for task:', task._id);
+                  }}
+                />
+              );
+            })}
             <button className="add-task-btn" onClick={() => openForm(status)}>
               + Add Task
             </button>
