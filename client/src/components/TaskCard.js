@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import API from '../utils/api';
 import './TaskCard.css';
 
@@ -8,9 +9,111 @@ const getPriorityClass = (priority) => {
   return 'priority-badge';
 };
 
-const TaskCard = ({ task }) => {
+const TaskCard = ({ task, onDragStart, onDragEnd }) => {
+  const [isDragging, setIsDragging] = useState(false);
+  const [touchStart, setTouchStart] = useState(null);
+
   const handleDragStart = (e) => {
     e.dataTransfer.setData('taskId', task._id);
+    setIsDragging(true);
+    onDragStart?.(task._id);
+  };
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
+    onDragEnd?.();
+  };
+
+  // Touch events for mobile drag and drop
+  const handleTouchStart = (e) => {
+    const touch = e.touches[0];
+    setTouchStart({
+      x: touch.clientX,
+      y: touch.clientY,
+      target: e.currentTarget
+    });
+    setIsDragging(true);
+    onDragStart?.(task._id);
+    
+    // Add visual feedback and dragging class
+    e.currentTarget.classList.add('dragging');
+    e.currentTarget.style.transition = 'transform 0.2s ease';
+    e.currentTarget.style.transform = 'scale(1.05) rotate(2deg)';
+    e.currentTarget.style.zIndex = '1000';
+    e.currentTarget.style.opacity = '0.9';
+  };
+
+  const handleTouchMove = (e) => {
+    if (!touchStart) return;
+
+    const touch = e.touches[0];
+    const element = touchStart.target;
+    
+    // Move the element with touch
+    element.style.position = 'fixed';
+    element.style.left = `${touch.clientX - element.offsetWidth / 2}px`;
+    element.style.top = `${touch.clientY - element.offsetHeight / 2}px`;
+    element.style.transform = 'scale(1.05) rotate(3deg)';
+    element.style.zIndex = '1000';
+    element.style.pointerEvents = 'none';
+    
+    // Highlight drop zones
+    const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+    const dropZone = elementBelow?.closest('.kanban-column');
+    
+    // Remove previous highlights
+    document.querySelectorAll('.kanban-column').forEach(col => {
+      col.classList.remove('drop-zone-active');
+    });
+    
+    // Add highlight to current drop zone
+    if (dropZone && dropZone.dataset.status !== task.status) {
+      dropZone.classList.add('drop-zone-active');
+    }
+  };
+
+  const handleTouchEnd = (e) => {
+    if (!touchStart) return;
+
+    const touch = e.changedTouches[0];
+    const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+    const dropZone = elementBelow?.closest('.kanban-column');
+    
+    // Reset element position and style
+    const element = touchStart.target;
+    element.classList.remove('dragging');
+    element.style.position = '';
+    element.style.zIndex = '';
+    element.style.left = '';
+    element.style.top = '';
+    element.style.transform = '';
+    element.style.transition = '';
+    element.style.opacity = '';
+    element.style.pointerEvents = '';
+
+    // Remove all drop zone highlights
+    document.querySelectorAll('.kanban-column').forEach(col => {
+      col.classList.remove('drop-zone-active');
+    });
+
+    // Handle drop
+    if (dropZone && onDragEnd) {
+      const status = dropZone.dataset.status;
+      if (status && status !== task.status) {
+        onDragEnd(task._id, status);
+        
+        // Visual feedback for successful drop
+        element.style.transition = 'transform 0.3s ease';
+        element.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+          element.style.transform = '';
+          element.style.transition = '';
+        }, 300);
+      }
+    }
+
+    setTouchStart(null);
+    setIsDragging(false);
   };
 
   const handleSmartAssign = async () => {
@@ -39,7 +142,11 @@ const TaskCard = ({ task }) => {
     <div
       draggable
       onDragStart={handleDragStart}
-      className="task-card fade-in"
+      onDragEnd={handleDragEnd}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      className={`task-card fade-in ${isDragging ? 'dragging' : ''}`}
     >
       <div className="task-card-header">
         <h4 className="task-title">{task.title}</h4>
