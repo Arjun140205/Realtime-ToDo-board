@@ -14,7 +14,22 @@ const TaskCard = ({ task, onDragStart, onDragEnd }) => {
   const [touchStart, setTouchStart] = useState(null);
 
   const handleDragStart = (e) => {
-    e.dataTransfer.setData('taskId', task._id);
+    console.log('Drag start for task:', task);
+    console.log('Task._id:', task._id);
+    console.log('Task keys:', Object.keys(task));
+    
+    if (!task._id) {
+      console.error('Task ID is missing:', task);
+      e.preventDefault(); // Prevent drag if no ID
+      return;
+    }
+    
+    // Use text/plain as it's more reliable across browsers
+    e.dataTransfer.setData('text/plain', task._id);
+    e.dataTransfer.effectAllowed = 'move';
+    
+    console.log('Data set in dataTransfer with text/plain:', task._id);
+    
     setIsDragging(true);
     onDragStart?.(task._id);
   };
